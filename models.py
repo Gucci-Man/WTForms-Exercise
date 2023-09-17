@@ -21,8 +21,9 @@ class Pet(db.Model):
     species = db.Column(db.Text, nullable=False)
     photo_url = db.Column(
         db.Text,
+        nullable=True,
         default="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeNvCeCjX9KgEgNeTXOwE1WeAC7Ybm0OxHzA&usqp=CAU",
     )
-    age = db.Column(db.Integer)
-    notes = db.Column(db.Text)
-    available = db.Column(db.Boolean, default=True)
+    age = db.Column(db.Integer, nullable=True)
+    notes = db.Column(db.Text, nullable=True)
+    available = db.Column(db.Boolean, nullable=True, default=True)

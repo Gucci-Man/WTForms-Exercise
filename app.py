@@ -25,3 +25,25 @@ def home_page():
     """Home page that list the pets"""
     pets = Pet.query.all()
     return render_template("home.html", pets=pets)
+
+
+@app.route("/add", methods=["GET", "POST"])
+def add():
+    """Form to add pets"""
+    form = PetForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        species = form.species.data
+        photo = form.photo.data
+        if len(photo) == 0:
+            photo = None  # if image_url is empty, then make it NULL
+
+        age = form.age.data
+        notes = form.notes.data
+
+        pet = Pet(name=name, species=species, photo_url=photo, age=age, notes=notes)
+        db.session.add(pet)
+        db.session.commit()
+        return redirect("/")
+    else:
+        return render_template("add_pet.html", form=form)

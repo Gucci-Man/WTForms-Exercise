@@ -15,8 +15,13 @@ debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
+# Create tables
+""" db.drop_all()
+db.create_all() """
+
 
 @app.route("/")
 def home_page():
     """Home page that list the pets"""
-    return render_template("home.html")
+    pets = Pet.query.all()
+    return render_template("home.html", pets=pets)

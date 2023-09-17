@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block body %}
-    <h1>Home</h1>
+    <h1>Pets</h1>
+    {% for pet in pets %}
+    <div>
+        <img src="{{pet.photo_url}}" alt="Pet photo">
+        <h3>{{pet.name}}</h3>
+        {% if pet.available %}
+            <h3>is available</h3>
+        {% else %}
+            <h3>is not available</h3>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

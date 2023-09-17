@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.validators import InputRequired, Email, Optional
+from wtforms.validators import InputRequired, Email, Optional, URL, NumberRange
 from wtforms import (
     StringField,
     TextAreaField,
@@ -8,19 +8,19 @@ from wtforms import (
     IntegerField,
     RadioField,
     SelectField,
+    URLField,
 )
 
 
-# TODO - pet name(required), species(required), photo URL, age, notes
 class PetForm(FlaskForm):
     """Form to add pet"""
 
     name = StringField(
         "Name", validators=[InputRequired(message="Pet name can't be blank")]
     )
-    species = StringField(
-        "Species", validators=[InputRequired(message="Species can't be blank")]
+    species = SelectField(
+        "Species", choices=[("dog", "Dog"), ("cat", "Cat"), ("pcp", "Porcupine")]
     )
-    photo = StringField("Photo URL", validators=[Optional()])
-    age = IntegerField("Age", validators=[Optional()])
+    photo = URLField("Photo URL", validators=[Optional(), URL()])
+    age = IntegerField("Age", validators=[Optional(), NumberRange(min=0, max=30)])
     notes = TextAreaField("Notes", validators=[Optional()])

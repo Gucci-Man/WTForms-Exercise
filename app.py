@@ -36,7 +36,7 @@ def add():
         species = form.species.data
         photo = form.photo.data
         if len(photo) == 0:
-            photo = None  # if image_url is empty, then make it NULL
+            photo = None  # if image_url is empty, then make it NULL, so default photo can be used
 
         age = form.age.data
         notes = form.notes.data
@@ -47,3 +47,25 @@ def add():
         return redirect("/")
     else:
         return render_template("add_pet.html", form=form)
+
+
+@app.route("/<int:pet_id>", methods=["GET", "POST"])
+def details(pet_id):
+    """Shows details of pet and allow edits"""
+    pet = Pet.query.get_or_404(pet_id)
+    form = EditPetForm()
+
+    if form.validate_on_submit():
+        photo = form.photo.data
+
+        # if new photo, then replace photo
+        if len(photo) > 0:
+            pet.photo_url = photo
+
+        pet.notes = form.notes.data
+        pet.available = form.available.data
+
+        db.session.commit()
+        return redirect("/")
+    else:
+        return render_template("edit_pet.html", form=form, pet=pet)

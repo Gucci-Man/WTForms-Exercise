@@ -9,12 +9,14 @@
             {% for field in form if field.widget.input_type != 'hidden' %}
             <div class="form-group">
                 {{field.label}}
-                {{field(class_="form-control")}}
-                {% for err in field.errors %}
-                <small class="form-text text-danger">
-                    {{err}}
-                </small>
-                {% endfor %}
+                {{field(class="form-control")}}
+                {% if field.errors %}
+                    {% for err in field.errors %}
+                    <small class="form-text text-danger">
+                        {{err}}
+                    </small>
+                    {% endfor %}
+                {% endif %}
             </div>
             {% endfor %}
             <button class="btn btn-success btn-lg">Add Pet</button>
